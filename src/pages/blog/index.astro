@@ -5,7 +5,7 @@ import Footer from '../../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
 import { getCollection, type CollectionEntry } from 'astro:content';
 import FormattedDate from '../../components/FormattedDate.astro';
-import notFoundSvg from '../../assets/Shrug-pana.svg'
+import NoBlogPostsSvg from '../../assets/NoBlogPosts.svg'
 import { Image } from 'astro:assets';
 
 type BlogCollection = CollectionEntry<'blog'>
@@ -100,7 +100,7 @@ blogPosts.sort(
                     <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                         <h4>Looks like I haven't published any blogs yet 😱</h4>
                         <h5>I'll get right on that!</h5>
-                        <Image src={notFoundSvg} format='svg' alt="no content"/>
+                        <Image src={NoBlogPostsSvg} format='svg' alt="No blog posts"/>
                     </div>
                 )}
                 {blogPosts.length > 0 && (
