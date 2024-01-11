@@ -10,11 +10,10 @@ import { Image } from 'astro:assets';
 
 type BlogCollection = CollectionEntry<'blog'>
 
-const postCollection: BlogCollection = await getCollection('blog')
+const blogCollection: BlogCollection = await getCollection('blog')
+const blogPosts = Array.isArray(blogCollection) ? blogCollection : []
 
-const posts = Array.isArray(postCollection) ? postCollection : []
-
-posts.sort(
+blogPosts.sort(
 	(a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
 );
 ---
@@ -97,17 +96,17 @@ posts.sort(
 		<Header />
 		<main>
 			<section>
-                {posts.length === 0 && (
+                {blogPosts.length === 0 && (
                     <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                         <h4>Looks like I haven't published any blogs yet 😱</h4>
                         <h5>I'll get right on that!</h5>
                         <Image src={notFoundSvg} format='svg' alt="no content"/>
                     </div>
                 )}
-                {posts.length > 0 && (
+                {blogPosts.length > 0 && (
                     <ul>
                         {
-                            posts.map((post) => (
+                            blogPosts.map((post) => (
                                 <li>
                                     <a href={`/blog/${post.slug}/`}>
                                         <img width={720} height={360} src={post.data.heroImage} alt="" />
