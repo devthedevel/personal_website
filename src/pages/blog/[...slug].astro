@@ -3,8 +3,12 @@ import { type CollectionEntry, getCollection } from 'astro:content';
 import BlogPost from '../../layouts/BlogPost.astro';
 
 export async function getStaticPaths() {
-	const posts = await getCollection('blog');
-	return posts.map((post) => ({
+    type BlogCollection = CollectionEntry<'blog'>
+
+    const blogCollection: BlogCollection = await getCollection('blog')
+    const blogPosts = Array.isArray(blogCollection) ? blogCollection : []
+
+	return blogPosts.map((post) => ({
 		params: { slug: post.slug },
 		props: post,
 	}));
@@ -12,9 +16,12 @@ export async function getStaticPaths() {
 type Props = CollectionEntry<'blog'>;
 
 const post = Astro.props;
+// @ts-ignore - 404 page will catch any runtime errors
 const { Content } = await post.render();
 ---
-
-<BlogPost {...post.data}>
+<BlogPost {
+    // @ts-ignore
+...post.data
+}>
 	<Content />
 </BlogPost>
