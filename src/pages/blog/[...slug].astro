@@ -19,9 +19,6 @@ const post = Astro.props;
 // @ts-ignore - 404 page will catch any runtime errors
 const { Content } = await post.render();
 ---
-<BlogPost {
-    // @ts-ignore
-...post.data
-}>
+<BlogPost {...(post as any).data }>
 	<Content />
 </BlogPost>
