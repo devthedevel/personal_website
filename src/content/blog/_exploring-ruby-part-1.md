@@ -2,7 +2,7 @@
 title: 'Exploring Ruby - Part 1'
 description: 'Exploring Ruby - Part 1'
 pubDate: 'Jan 10 2024'
-heroImage: '/blog/chris-ried-ieic5Tq8YMk-unsplash.jpg'
+heroImage: '../../assets/chris-ried-ieic5Tq8YMk-unsplash.jpg'
 ---
 
 ## Intro
