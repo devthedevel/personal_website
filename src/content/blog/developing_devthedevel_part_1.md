@@ -2,7 +2,7 @@
 title: 'Developing devthedevel.xyz - Part 1'
 description: 'Developing devthedevel.xyz - Part 1'
 pubDate: 'Jan 12 2024'
-heroImage: '../../assets/devthedevel_xyz_site.jpg'
+heroImage: '/blog/devthedevel_xyz_site.jpg'
 ---
 
 Whoa, isn't that a trippy blog image 😂
@@ -127,7 +127,7 @@ So Astro created a site for me. It added a blog for me. Its doing lots of things
 
 Between creating the site and writing this first post, I have done some minor changes to the site to make it mine. I added a couple social media links. I wrote an [index](../../) page and an [about](../../about) page (writing about yourself is so hard). I added a 404 page. I added a placeholder page for blogs in the event that I have no blogs within `content/blogs/` (which should never be the case if you are reading this). Its just below if you do want to see it however:
 
-![Empty blog page](../../assets/empty_blog_page.jpg)
+![Empty blog page](./public/blog/empty_blog_page.jpg)
 
 Although its very very very unlikely to see this page, I kinda love it. Makes me feel like a real web developer (my entire backend-hardened body shuddered while typing that).
 
