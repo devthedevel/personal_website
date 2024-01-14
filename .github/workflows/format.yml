@@ -1,0 +1,14 @@
+name: Format Code
+
+on: [pull_request, workflow_dispatch]
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Node
+        uses: actions/setup-node@v4
+      - name: Prettier
+        run: npm run prettier
