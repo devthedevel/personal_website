@@ -11,7 +11,7 @@ First of all if you are reading this then welcome to my site! Thanks for being h
 
 I created this site way back in the summer of 2023, just for something to do. I wanted to learn Astro, and I wanted to get some more experience building frontends. I also wanted my own _semi_-professional website. So I started a new Astro project, bought a new domain, and got to work.
 
-And at some point while I was setting up, I realized that I wanted to make a blog about my journey developing this actual site. Which sounds like a great re-occuring blog segment in my opinion! 
+And at some point while I was setting up, I realized that I wanted to make a blog about my journey developing this actual site. Which sounds like a great re-occuring blog segment in my opinion!
 
 The goal of this blog is to hopefully educate and entertain newer software developers. Another goal is to help me build up my own site and portfolio. And yet another goal is to keep me busy learning new things. And even yet another goal is to motivate me to actually stick to a project (instead of working on a project for a couple days and then throwing it into the abyss that is my 'backlog' 😩).
 
@@ -84,7 +84,7 @@ If you have been paying attention you may be wondering how blogs within `content
 
 Astro supports _dynamic routing_: all you need to do is name the file correctly and tell Astro how to generate the static paths for a page.
 
-Step one: naming the file. Naming a file `[...path].astro` will tell Astro to pass the path into the component script. You can access the path via `Astro.params` in the component script. 
+Step one: naming the file. Naming a file `[...path].astro` will tell Astro to pass the path into the component script. You can access the path via `Astro.params` in the component script.
 
 Step two: generating static paths. Within the component script you can export a function called `getStaticPaths()`. This function should return an array of objects that define static paths for the page. This allows you to generate pages that have different contents based on its path. This lets me write as many blogs I want in `content/blog/` and never have to write an individual corresponding page in `pages/blog`.
 

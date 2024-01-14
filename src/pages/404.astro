@@ -5,22 +5,27 @@ import Header from '../components/Header.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import NotFound404Svg from '../assets/404.svg';
 import { Image } from 'astro:assets';
-
 ---
 
 <!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header title={SITE_TITLE} />
-		<main>
-            <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-                <h4>Uh oh, this page doesn't exist</h4>
-                <Image src={NotFound404Svg} format='svg' alt="404 Page not found"/>
-            </div>
-		</main>
-		<Footer />
-	</body>
+<html lang='en'>
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  </head>
+  <body>
+    <Header title={SITE_TITLE} />
+    <main>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <h4>Uh oh, this page doesn't exist</h4>
+        <Image src={NotFound404Svg} format='svg' alt='404 Page not found' />
+      </div>
+    </main>
+    <Footer />
+  </body>
 </html>

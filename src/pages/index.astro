@@ -3,52 +3,61 @@ import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
-import DeveloperSvg from '../assets/developer.svg'
+import DeveloperSvg from '../assets/developer.svg';
 import { Image } from 'astro:assets';
 ---
 
 <!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header title={SITE_TITLE} />
-		<main>
-            <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-                <h1>Well hello there! 👋</h1>
-                <Image src={DeveloperSvg} format='svg' alt="Welcome"/>
-            </div>	
-            <p>
-				Welcome to my little slice of the internet where I talk about my projects, give my opinions on things in the tech world, 
-				and just generally rant about things. Expect opinionated views from me.
-			</p>
-			<p>
-				Will this be the best site to learn new tech things and get super handy developer tips?
-			</p>
-			<p>
-				Probably not.
-			</p>
-			<p>
-				But will this site have good entertaining content that the whole family looks forward to?
-			</p>
-			<p>
-				Again probably not.
-			</p>
-			<p>
-				Saying that I do hope that some of my developer experiences can help you or you perhaps get a good chuckle from my rantings
-				every now and then.
-			</p>
-			<p>
-				Oh and just in case you couldn't tell yet, this site is 99% the blog-template from
-				<a href="https://astro.build/">Astro</a> 🚀 (an awesome static content framework that this site is built from)!
-				I'm slowly working on this site to give it my own vibe, and I'm using the generated content to learn how to use Astro. 
-				So if you see anything that looks generated, then I just haven't got around to update it yet.
-			</p>
-			<p>
-				So to wrap it up: welcome to my site, expect opinionated views, forgive the rough edges, and enjoy what you read!
-			</p>
-		</main>
-		<Footer />
-	</body>
+<html lang='en'>
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  </head>
+  <body>
+    <Header title={SITE_TITLE} />
+    <main>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <h1>Well hello there! 👋</h1>
+        <Image src={DeveloperSvg} format='svg' alt='Welcome' />
+      </div>
+      <p>
+        Welcome to my little slice of the internet where I talk about my
+        projects, give my opinions on things in the tech world, and just
+        generally rant about things. Expect opinionated views from me.
+      </p>
+      <p>
+        Will this be the best site to learn new tech things and get super handy
+        developer tips?
+      </p>
+      <p>Probably not.</p>
+      <p>
+        But will this site have good entertaining content that the whole family
+        looks forward to?
+      </p>
+      <p>Again probably not.</p>
+      <p>
+        Saying that I do hope that some of my developer experiences can help you
+        or you perhaps get a good chuckle from my rantings every now and then.
+      </p>
+      <p>
+        Oh and just in case you couldn't tell yet, this site is 99% the
+        blog-template from
+        <a href='https://astro.build/'>Astro</a> 🚀 (an awesome static content framework
+        that this site is built from)! I'm slowly working on this site to give it
+        my own vibe, and I'm using the generated content to learn how to use Astro.
+        So if you see anything that looks generated, then I just haven't got around
+        to update it yet.
+      </p>
+      <p>
+        So to wrap it up: welcome to my site, expect opinionated views, forgive
+        the rough edges, and enjoy what you read!
+      </p>
+    </main>
+    <Footer />
+  </body>
 </html>
