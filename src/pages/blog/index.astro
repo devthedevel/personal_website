@@ -13,7 +13,7 @@ type BlogCollection = CollectionEntry<'blog'>;
 const blogCollection: BlogCollection = await getCollection('blog');
 const blogPosts = Array.isArray(blogCollection) ? blogCollection : [];
 
-blogPosts.sort((a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf());
+blogPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 
 <!doctype html>
