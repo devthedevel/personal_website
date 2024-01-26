@@ -118,7 +118,7 @@ blogPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
                     <img
                       width={720}
                       height={360}
-                      src={post.data.heroImage}
+                      src={post.data.heroImage ?? '/blog/blog-placeholder.jpg'}
                       alt=''
                     />
                     <h4 class='title'>{post.data.title}</h4>
