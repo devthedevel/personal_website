@@ -1,11 +1,11 @@
 ---
-import BaseHead from '../../components/BaseHead.astro';
-import Header from '../../components/Header.astro';
-import Footer from '../../components/Footer.astro';
+import BaseHead from '@components/BaseHead.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
 import { getCollection, type CollectionEntry } from 'astro:content';
-import FormattedDate from '../../components/FormattedDate.astro';
-import NoBlogPostsSvg from '../../assets/no-blog-posts.svg';
+import FormattedDate from '@components/FormattedDate.astro';
+import NoBlogPostsSvg from '@assets/no-blog-posts.svg';
 import { Image } from 'astro:assets';
 
 type BlogCollection = CollectionEntry<'blog'>;
