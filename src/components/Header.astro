@@ -1,7 +1,29 @@
 ---
 import HeaderLink from './HeaderLink.astro';
 import { SITE_TITLE } from '../consts';
+import Toggle from './Toggle.astro'
 ---
+<script>
+  const root = document.querySelector(':root')
+  const themeToggle = document.getElementById('themeToggle') as HTMLInputElement
+
+  // Set default theme
+  themeToggle.checked = window.matchMedia('(prefers-color-scheme: dark)').matches
+
+  const updateTheme = () => {
+    if (themeToggle.checked) {
+      root?.classList.add('dark')
+    } else {
+      root?.classList.remove('dark')
+    }
+  }
+
+  // Set default toggle value
+  updateTheme()
+
+  // Add togglable theme
+  themeToggle?.addEventListener('change', updateTheme)
+</script>
 
 <header>
   <nav>
@@ -12,6 +34,8 @@ import { SITE_TITLE } from '../consts';
       <HeaderLink href='/about'>About</HeaderLink>
     </div>
     <div class='social-links'>
+      <Toggle id="themeToggle"/>
+
       <a href='https://nfld.social/@devthedevel' target='_blank'>
         <span class='sr-only'>Follow devthedevel@nfld.social on Mastodon</span>
         <svg viewBox='0 0 16 16' aria-hidden='true' width='32' height='32'
