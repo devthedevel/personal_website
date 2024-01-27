@@ -5,16 +5,58 @@
  */
 
 :root {
-  --accent: #2337ff;
-  --accent-dark: #000d8a;
-  --black: 15, 18, 25;
-  --gray: 96, 115, 159;
-  --gray-light: 229, 233, 240;
-  --gray-dark: 34, 41, 57;
-  --gray-gradient: rgba(var(--gray-light), 50%), #fff;
+  --black: #0f1219;
+  --gray: #60739f;
+  --gray-light: #e5e9f0;
+  --gray-dark: #222939;
   --box-shadow: 0 2px 6px rgba(var(--gray), 25%),
     0 8px 24px rgba(var(--gray), 33%), 0 16px 32px rgba(var(--gray), 33%);
+
+  --primary: #2337ff;
+  --primary-dark: #000d8a;
+
+  --title: var(--black);
+  --text: var(--gray-dark);
+  --text-dark: var(--gray-dark);
+  --text-light: var(--gray-light);
+
+  /* --background: rgba(var(--gray-light), 50%), #fff;
+  --background-dark: var(--gray); */
+  --background: #fff;
+  --background-secondary: var(--gray-light);
+
+  --code-background: var(--gray-light);
 }
+/* 
+- #141414
+- #1F1F1F
+- #292929
+- #393939
+- #D6D6D6
+- #EDEDED
+*/
+:root.dark {
+  --black: #0f1219;
+  --gray: #60739f;
+  --gray-light: #e5e9f0;
+  --gray-dark: #222939;
+  --box-shadow: 0 2px 6px rgba(var(--gray), 25%),
+    0 8px 24px rgba(var(--gray), 33%), 0 16px 32px rgba(var(--gray), 33%);
+
+  --primary: #5FA4FF;
+  --primary-dark: #1F80FF;
+
+  --title: #EDEDED;
+  --text: #D6D6D6;
+  --text-dark: #D6D6D6;
+  --text-light: #D6D6D6;
+
+  --background: #141414;
+  --background-secondary: #1F1F1F;
+
+  --code-background: #24292e;
+}
+
 @font-face {
   font-family: 'Atkinson';
   src: url('/fonts/atkinson-regular.woff') format('woff');
@@ -34,11 +76,12 @@ body {
   margin: 0;
   padding: 0;
   text-align: left;
-  background: linear-gradient(var(--gray-gradient)) no-repeat;
+  background: linear-gradient(var(--background-secondary), var(--background)) no-repeat;
+  background-color: var(--background);
   background-size: 100% 600px;
   word-wrap: break-word;
   overflow-wrap: break-word;
-  color: rgb(var(--gray-dark));
+  color: var(--text);
   font-size: 20px;
   line-height: 1.7;
 }
@@ -55,7 +98,7 @@ h4,
 h5,
 h6 {
   margin: 0 0 0.5rem 0;
-  color: rgb(var(--black));
+  color: var(--title);
   line-height: 1.2;
 }
 h1 {
@@ -78,10 +121,10 @@ b {
   font-weight: 700;
 }
 a {
-  color: var(--accent);
+  color: var(--primary);
 }
 a:hover {
-  color: var(--accent);
+  color: var(--primary-dark);
 }
 p {
   margin-bottom: 1em;
@@ -106,7 +149,7 @@ img {
 }
 code {
   padding: 2px 5px;
-  background-color: rgb(var(--gray-light));
+  background-color: var(--code-background);
   border-radius: 2px;
 }
 pre {
@@ -117,14 +160,14 @@ pre > code {
   all: unset;
 }
 blockquote {
-  border-left: 4px solid var(--accent);
+  border-left: 4px solid var(--primary);
   padding: 0 0 0 20px;
   margin: 0px;
   font-size: 1.333em;
 }
 hr {
   border: none;
-  border-top: 1px solid rgb(var(--gray-light));
+  border-top: 1px solid rgb(var(--text-light));
 }
 @media (max-width: 720px) {
   body {

@@ -1,7 +1,33 @@
 ---
 import HeaderLink from './HeaderLink.astro';
 import { SITE_TITLE } from '../consts';
+import Toggle from './Toggle.astro'
 ---
+<script>
+  const root = document.querySelector(':root')
+  const themeToggle = document.getElementById('themeToggle') as HTMLInputElement
+
+  const savedTheme = localStorage.getItem('darkTheme'); 
+
+  // Set default theme
+  themeToggle.checked = savedTheme ? savedTheme === 'true' : window.matchMedia('(prefers-color-scheme: dark)').matches
+
+  const updateTheme = () => {
+    if (themeToggle.checked) {
+      root?.classList.add('dark')
+      localStorage.setItem('darkTheme', 'true')
+    } else {
+      root?.classList.remove('dark')
+      localStorage.setItem('darkTheme', 'false')
+    }
+  }
+
+  // Set default toggle value
+  updateTheme()
+
+  // Add togglable theme
+  themeToggle?.addEventListener('change', updateTheme)
+</script>
 
 <header>
   <nav>
@@ -12,6 +38,8 @@ import { SITE_TITLE } from '../consts';
       <HeaderLink href='/about'>About</HeaderLink>
     </div>
     <div class='social-links'>
+      <Toggle id="themeToggle"/>
+
       <a href='https://nfld.social/@devthedevel' target='_blank'>
         <span class='sr-only'>Follow devthedevel@nfld.social on Mastodon</span>
         <svg viewBox='0 0 16 16' aria-hidden='true' width='32' height='32'
@@ -37,7 +65,7 @@ import { SITE_TITLE } from '../consts';
   header {
     margin: 0;
     padding: 0 1em;
-    background: white;
+    background: var(--background);
     box-shadow: 0 2px 8px rgba(var(--black), 5%);
   }
   h2 {
@@ -56,17 +84,21 @@ import { SITE_TITLE } from '../consts';
   }
   nav a {
     padding: 1em 0.5em;
-    color: var(--black);
+    color: var(--title);
     border-bottom: 4px solid transparent;
     text-decoration: none;
   }
   nav a.active {
     text-decoration: none;
-    border-bottom-color: var(--accent);
+    border-bottom-color: var(--primary);
   }
   .social-links,
   .social-links a {
     display: flex;
+    align-items: center;
+  }
+  .social-links a:hover {
+    color: var(--primary)
   }
   @media (max-width: 720px) {
     .social-links {
