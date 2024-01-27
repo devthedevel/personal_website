@@ -7,14 +7,18 @@ import Toggle from './Toggle.astro'
   const root = document.querySelector(':root')
   const themeToggle = document.getElementById('themeToggle') as HTMLInputElement
 
+  const savedTheme = localStorage.getItem('darkTheme'); 
+
   // Set default theme
-  themeToggle.checked = window.matchMedia('(prefers-color-scheme: dark)').matches
+  themeToggle.checked = savedTheme ? savedTheme === 'true' : window.matchMedia('(prefers-color-scheme: dark)').matches
 
   const updateTheme = () => {
     if (themeToggle.checked) {
       root?.classList.add('dark')
+      localStorage.setItem('darkTheme', 'true')
     } else {
       root?.classList.remove('dark')
+      localStorage.setItem('darkTheme', 'false')
     }
   }
 
