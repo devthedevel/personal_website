@@ -12,7 +12,7 @@ import Toggle from './Toggle.astro';
 
   const savedTheme = localStorage.getItem('darkTheme');
 
-  // Set default theme
+  // Check for theme preference
   themeToggle.checked = savedTheme
     ? savedTheme === 'true'
     : window.matchMedia('(prefers-color-scheme: dark)').matches;

@@ -1,6 +1,6 @@
 ---
-title: 'Developing devthedevel.xyz - Part 1'
-description: 'Developing devthedevel.xyz - Part 1'
+title: 'Developing devthedevel - Part 1'
+description: 'Developing devthedevel - Part 1'
 pubDate: 'Jan 12 2024'
 heroImage: '/blog/devthedevel_xyz_site.jpg'
 ---

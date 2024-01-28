@@ -19,8 +19,6 @@
   --text-dark: var(--gray-dark);
   --text-light: var(--gray-light);
 
-  /* --background: rgba(var(--gray-light), 50%), #fff;
-  --background-dark: var(--gray); */
   --background: #fff;
   --background-secondary: var(--gray-light);
 
