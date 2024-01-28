@@ -2,6 +2,7 @@
 title: 'Developing devthedevel - Part 2'
 description: 'Developing devthedevel - Part 2'
 pubDate: 'Jan 27 2024'
+heroImage: '/blog/DarkMode.png'
 ---
 
 Wow I never thought I would write another blog, let alone actually continue developing this site! 🎉
