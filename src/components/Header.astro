@@ -70,8 +70,10 @@ import Toggle from './Toggle.astro';
   header {
     margin: 0;
     padding: 0 1em;
-    background: var(--background);
+    background: var(--header);
     box-shadow: 0 2px 8px rgba(var(--black), 5%);
+    position: sticky;
+    top: 0
   }
   h2 {
     margin: 0;
@@ -89,13 +91,13 @@ import Toggle from './Toggle.astro';
   }
   nav a {
     padding: 1em 0.5em;
-    color: var(--title);
+    color: var(--header-text);
     border-bottom: 4px solid transparent;
     text-decoration: none;
   }
   nav a.active {
     text-decoration: none;
-    border-bottom-color: var(--primary);
+    border-bottom-color: var(--header-primary);
   }
   .social-links,
   .social-links a {
@@ -103,7 +105,7 @@ import Toggle from './Toggle.astro';
     align-items: center;
   }
   .social-links a:hover {
-    color: var(--primary);
+    color: var(--header-primary);
   }
   @media (max-width: 720px) {
     .social-links {
