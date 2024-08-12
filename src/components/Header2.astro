@@ -21,20 +21,25 @@ const pages: { href: string; name: string }[] = [
 ---
 
 <script>
+    /**
+     * Theme
+     */
     const root = document.querySelector(':root');
     const themeToggle = document.getElementById(
         'theme-toggle',
     ) as HTMLInputElement;
-
-    const savedTheme = localStorage.getItem('darkTheme');
+    const mobileThemeToggle = document.getElementById(
+        'mobile-theme-toggle',
+    ) as HTMLInputElement;
 
     // Check for theme preference
-    themeToggle.checked = savedTheme
+    const savedTheme = localStorage.getItem('darkTheme');
+    const isToggleChecked = savedTheme
         ? savedTheme === 'true'
         : window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-    const updateTheme = () => {
-        if (themeToggle.checked) {
+    const updateTheme = (checked: boolean) => {
+        if (checked) {
             root?.classList.add('dark');
             localStorage.setItem('darkTheme', 'true');
         } else {
@@ -44,11 +49,24 @@ const pages: { href: string; name: string }[] = [
     };
 
     // Set default toggle value
-    updateTheme();
+    updateTheme(isToggleChecked);
 
-    // Add togglable theme
-    themeToggle?.addEventListener('change', updateTheme);
+    // Add toggle theme thats synced across desktop/mobile views
+    themeToggle?.addEventListener('change', () => {
+        const checked = themeToggle.checked;
+        mobileThemeToggle.checked = checked;
+        updateTheme(checked);
+    });
 
+    mobileThemeToggle?.addEventListener('change', () => {
+        const checked = mobileThemeToggle.checked;
+        themeToggle.checked = checked;
+        updateTheme(checked);
+    });
+
+    /**
+     * Menu
+     */
     const menuButton = document.getElementById('mobile-menu-button');
 
     menuButton?.addEventListener('click', () => {
@@ -127,7 +145,7 @@ const pages: { href: string; name: string }[] = [
                     >
                 </a>
             </div>
-            <Toggle id='theme-toggle' />
+            <Toggle id='mobile-theme-toggle' />
         </div>
     </div>
 </header>
