@@ -68,16 +68,24 @@ const pages: { href: string; name: string }[] = [
      * Menu
      */
     const menuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const overlay = document.getElementById('overlay');
 
     menuButton?.addEventListener('click', () => {
-        const mobileMenu = document.getElementById('mobile-menu');
         const isMobile = window.matchMedia('(max-width: 720px)').matches;
 
         if (isMobile && mobileMenu?.style.display === 'flex') {
-            mobileMenu.style.display = 'none';
+            mobileMenu!.style.display = 'none';
+            overlay!.style.display = 'none';
         } else {
             mobileMenu!.style.display = 'flex';
+            overlay!.style.display = 'block';
         }
+    });
+
+    overlay?.addEventListener('click', () => {
+        mobileMenu!.style.display = 'none';
+        overlay.style.display = 'none';
     });
 </script>
 
@@ -148,6 +156,7 @@ const pages: { href: string; name: string }[] = [
             <Toggle id='mobile-theme-toggle' />
         </div>
     </div>
+    <div id='overlay'></div>
 </header>
 
 <style>
@@ -158,6 +167,7 @@ const pages: { href: string; name: string }[] = [
         box-shadow: 0 2px 8px rgba(var(--black), 5%);
         position: sticky;
         top: 0;
+        z-index: 30;
         height: 60px;
         display: flex;
         align-items: center;
@@ -177,6 +187,7 @@ const pages: { href: string; name: string }[] = [
     }
 
     header h2 {
+        z-index: inherit;
         margin: 0;
         font-size: 1em;
     }
@@ -200,9 +211,14 @@ const pages: { href: string; name: string }[] = [
 
     #mobile-menu-button {
         display: none;
+        z-index: inherit;
     }
 
     #mobile-menu {
+        display: none;
+    }
+
+    #overlay {
         display: none;
     }
 
@@ -227,7 +243,7 @@ const pages: { href: string; name: string }[] = [
             left: 0;
             width: 100%;
             background-color: var(--header);
-            z-index: 1;
+            z-index: 20;
             border-top: 1px solid transparent;
             border-image: linear-gradient(
                 to right,
@@ -287,6 +303,17 @@ const pages: { href: string; name: string }[] = [
             margin: 0;
             line-height: 1;
             border-bottom: 0;
+        }
+
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 10;
+            display: none;
         }
     }
 </style>
