@@ -10,6 +10,40 @@ type Props = CollectionEntry<'blog'>['data'];
 const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 ---
 
+<script>
+  const topPageButton = document.getElementById('top-page-button');
+
+  const fadeStart = 200;
+  const fadeUntil = 550;
+
+  const adjustButtonOpacity = () => {
+    const scrollTop = window.scrollY;
+
+    if (scrollTop <= fadeStart) {
+      topPageButton!.style.opacity = '0';
+    } else if (scrollTop >= fadeUntil) {
+      topPageButton!.style.opacity = '1';
+    } else {
+      // Calculate the opacity based on the scroll position
+      const opacity = (scrollTop - fadeStart) / (fadeUntil - fadeStart);
+      topPageButton!.style.opacity = `${opacity}`;
+    }
+  };
+
+  // Initial check
+  adjustButtonOpacity();
+
+  // Check on scroll events
+  window.addEventListener('scroll', adjustButtonOpacity);
+
+  topPageButton?.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  });
+</script>
+
 <html lang='en'>
   <head>
     <BaseHead title={title} description={description} />
@@ -51,6 +85,19 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
       .last-updated-on {
         font-style: italic;
       }
+      #top-page-button {
+        position: fixed;
+        bottom: 15px;
+        right: 15px;
+        padding: 10px 12px;
+        background-color: var(--primary);
+        color: var(--primary-text);
+        border: none;
+        border-radius: 5%;
+        cursor: pointer;
+        display: block;
+        font-weight: bold;
+      }
     </style>
   </head>
 
@@ -81,6 +128,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
             <hr />
           </div>
           <slot />
+          <button id='top-page-button'>Back to Top</button>
         </div>
       </article>
     </main>
