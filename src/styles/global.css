@@ -22,6 +22,10 @@
   --background: #fff;
   --background-secondary: var(--gray-light);
 
+  --header: #0A0A0A;
+  --header-text: #ededed;
+  --header-primary: #5fa4ff;
+
   --code-background: var(--gray-light);
 }
 /* 
@@ -49,6 +53,10 @@
 
   --background: #141414;
   --background-secondary: #1f1f1f;
+
+  --header: #0A0A0A;
+  --header-text: var(--title);
+  --header-primary: #5fa4ff;
 
   --code-background: #24292e;
 }

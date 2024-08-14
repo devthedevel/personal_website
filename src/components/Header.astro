@@ -2,112 +2,326 @@
 import HeaderLink from './HeaderLink.astro';
 import { SITE_TITLE } from '../consts';
 import Toggle from './Toggle.astro';
+import Menu from './Menu.astro';
+
+const pages: { href: string; name: string }[] = [
+    {
+        href: '/',
+        name: 'Home',
+    },
+    {
+        href: '/blog',
+        name: 'Blog',
+    },
+    {
+        href: '/about',
+        name: 'About',
+    },
+];
 ---
 
 <script>
-  const root = document.querySelector(':root');
-  const themeToggle = document.getElementById(
-    'themeToggle',
-  ) as HTMLInputElement;
+    /**
+     * Theme
+     */
+    const root = document.querySelector(':root');
+    const themeToggle = document.getElementById(
+        'theme-toggle',
+    ) as HTMLInputElement;
+    const mobileThemeToggle = document.getElementById(
+        'mobile-theme-toggle',
+    ) as HTMLInputElement;
 
-  const savedTheme = localStorage.getItem('darkTheme');
+    console.log('toggle', themeToggle.checked)
+    console.log('mobile toggle', themeToggle.checked)
 
-  // Check for theme preference
-  themeToggle.checked = savedTheme
-    ? savedTheme === 'true'
-    : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    // Check for theme preference
+    const savedTheme = localStorage.getItem('darkTheme');
+    const isToggleChecked = savedTheme
+        ? savedTheme === 'true'
+        : window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-  const updateTheme = () => {
-    if (themeToggle.checked) {
-      root?.classList.add('dark');
-      localStorage.setItem('darkTheme', 'true');
-    } else {
-      root?.classList.remove('dark');
-      localStorage.setItem('darkTheme', 'false');
-    }
-  };
+    const updateTheme = (checked: boolean) => {
+        if (checked) {
+            root?.classList.add('dark');
+            localStorage.setItem('darkTheme', 'true');
+        } else {
+            root?.classList.remove('dark');
+            localStorage.setItem('darkTheme', 'false');
+        }
+    };
 
-  // Set default toggle value
-  updateTheme();
+    // Set default toggle value
+    themeToggle.checked = isToggleChecked;
+    mobileThemeToggle.checked = isToggleChecked;
+    updateTheme(isToggleChecked);
 
-  // Add togglable theme
-  themeToggle?.addEventListener('change', updateTheme);
+    console.log('toggle', themeToggle.checked)
+    console.log('mobile toggle', themeToggle.checked)
+
+    // Add toggle theme thats synced across desktop/mobile views
+    themeToggle?.addEventListener('change', () => {
+        const checked = themeToggle.checked;
+        mobileThemeToggle.checked = checked;
+        updateTheme(checked);
+    });
+
+    mobileThemeToggle?.addEventListener('change', () => {
+        const checked = mobileThemeToggle.checked;
+        themeToggle.checked = checked;
+        updateTheme(checked);
+    });
+
+    /**
+     * Menu
+     */
+    const menuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const overlay = document.getElementById('overlay');
+
+    menuButton?.addEventListener('click', () => {
+        const isMobile = window.matchMedia('(max-width: 720px)').matches;
+
+        if (isMobile && mobileMenu?.style.display === 'flex') {
+            mobileMenu!.style.display = 'none';
+            overlay!.style.display = 'none';
+        } else {
+            mobileMenu!.style.display = 'flex';
+            overlay!.style.display = 'block';
+        }
+    });
+
+    overlay?.addEventListener('click', () => {
+        mobileMenu!.style.display = 'none';
+        overlay.style.display = 'none';
+    });
 </script>
 
 <header>
-  <nav>
-    <h2><a href='/'>{SITE_TITLE}</a></h2>
-    <div class='internal-links'>
-      <HeaderLink href='/'>Home</HeaderLink>
-      <HeaderLink href='/blog'>Blog</HeaderLink>
-      <HeaderLink href='/about'>About</HeaderLink>
-    </div>
-    <div class='social-links'>
-      <Toggle id='themeToggle' />
+    <h2>
+        <a href='/'>{SITE_TITLE}</a>
+    </h2>
 
-      <a href='https://nfld.social/@devthedevel' target='_blank'>
-        <span class='sr-only'>Follow devthedevel@nfld.social on Mastodon</span>
-        <svg viewBox='0 0 16 16' aria-hidden='true' width='32' height='32'
-          ><path
-            fill='currentColor'
-            d='M11.19 12.195c2.016-.24 3.77-1.475 3.99-2.603.348-1.778.32-4.339.32-4.339 0-3.47-2.286-4.488-2.286-4.488C12.062.238 10.083.017 8.027 0h-.05C5.92.017 3.942.238 2.79.765c0 0-2.285 1.017-2.285 4.488l-.002.662c-.004.64-.007 1.35.011 2.091.083 3.394.626 6.74 3.78 7.57 1.454.383 2.703.463 3.709.408 1.823-.1 2.847-.647 2.847-.647l-.06-1.317s-1.303.41-2.767.36c-1.45-.05-2.98-.156-3.215-1.928a3.614 3.614 0 0 1-.033-.496s1.424.346 3.228.428c1.103.05 2.137-.064 3.188-.189zm1.613-2.47H11.13v-4.08c0-.859-.364-1.295-1.091-1.295-.804 0-1.207.517-1.207 1.541v2.233H7.168V5.89c0-1.024-.403-1.541-1.207-1.541-.727 0-1.091.436-1.091 1.296v4.079H3.197V5.522c0-.859.22-1.541.66-2.046.456-.505 1.052-.764 1.793-.764.856 0 1.504.328 1.933.983L8 4.39l.417-.695c.429-.655 1.077-.983 1.934-.983.74 0 1.336.259 1.791.764.442.505.661 1.187.661 2.046v4.203z'
-          ></path></svg
-        >
-      </a>
-      <a href='https://github.com/devthedevel' target='_blank'>
-        <span class='sr-only'>Go to devthedevel's GitHub repo</span>
-        <svg viewBox='0 0 16 16' aria-hidden='true' width='32' height='32'
-          ><path
-            fill='currentColor'
-            d='M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z'
-          ></path></svg
-        >
-      </a>
+    <!-- Desktop -->
+    <div class='desktop-pages'>
+        <nav>
+            {
+                pages.map((page) => (
+                    <HeaderLink href={page.href}>{page.name}</HeaderLink>
+                ))
+            }
+        </nav>
     </div>
-  </nav>
+
+    <div class='desktop-theme-toggle'>
+        <Toggle id='theme-toggle' />
+    </div>
+
+    <!-- Mobile -->
+    <div id='mobile-menu-button'>
+        <Menu />
+    </div>
+
+    <div id='mobile-menu'>
+        <nav class='mobile-menu-pages'>
+            {
+                pages.map((page) => (
+                    <HeaderLink href={page.href}>{page.name}</HeaderLink>
+                ))
+            }
+        </nav>
+        <div class='mobile-menu-footer'>
+            <div class='mobile-menu-footer-socials'>
+                <a href='https://nfld.social/@devthedevel' target='_blank'>
+                    <span class='sr-only'
+                        >Follow devthedevel@nfld.social on Mastodon</span
+                    >
+                    <svg
+                        viewBox='0 0 16 16'
+                        aria-hidden='true'
+                        width='32'
+                        height='32'
+                        ><path
+                            fill='currentColor'
+                            d='M11.19 12.195c2.016-.24 3.77-1.475 3.99-2.603.348-1.778.32-4.339.32-4.339 0-3.47-2.286-4.488-2.286-4.488C12.062.238 10.083.017 8.027 0h-.05C5.92.017 3.942.238 2.79.765c0 0-2.285 1.017-2.285 4.488l-.002.662c-.004.64-.007 1.35.011 2.091.083 3.394.626 6.74 3.78 7.57 1.454.383 2.703.463 3.709.408 1.823-.1 2.847-.647 2.847-.647l-.06-1.317s-1.303.41-2.767.36c-1.45-.05-2.98-.156-3.215-1.928a3.614 3.614 0 0 1-.033-.496s1.424.346 3.228.428c1.103.05 2.137-.064 3.188-.189zm1.613-2.47H11.13v-4.08c0-.859-.364-1.295-1.091-1.295-.804 0-1.207.517-1.207 1.541v2.233H7.168V5.89c0-1.024-.403-1.541-1.207-1.541-.727 0-1.091.436-1.091 1.296v4.079H3.197V5.522c0-.859.22-1.541.66-2.046.456-.505 1.052-.764 1.793-.764.856 0 1.504.328 1.933.983L8 4.39l.417-.695c.429-.655 1.077-.983 1.934-.983.74 0 1.336.259 1.791.764.442.505.661 1.187.661 2.046v4.203z'
+                        ></path></svg
+                    >
+                </a>
+                <a href='https://github.com/devthedevel' target='_blank'>
+                    <span class='sr-only'>Go to devthedevel's GitHub repo</span>
+                    <svg
+                        viewBox='0 0 16 16'
+                        aria-hidden='true'
+                        width='32'
+                        height='32'
+                        ><path
+                            fill='currentColor'
+                            d='M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z'
+                        ></path></svg
+                    >
+                </a>
+            </div>
+            <Toggle id='mobile-theme-toggle' />
+        </div>
+    </div>
+    <div id='overlay'></div>
 </header>
-<style>
-  header {
-    margin: 0;
-    padding: 0 1em;
-    background: var(--background);
-    box-shadow: 0 2px 8px rgba(var(--black), 5%);
-  }
-  h2 {
-    margin: 0;
-    font-size: 1em;
-  }
 
-  h2 a,
-  h2 a.active {
-    text-decoration: none;
-  }
-  nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  nav a {
-    padding: 1em 0.5em;
-    color: var(--title);
-    border-bottom: 4px solid transparent;
-    text-decoration: none;
-  }
-  nav a.active {
-    text-decoration: none;
-    border-bottom-color: var(--primary);
-  }
-  .social-links,
-  .social-links a {
-    display: flex;
-    align-items: center;
-  }
-  .social-links a:hover {
-    color: var(--primary);
-  }
-  @media (max-width: 720px) {
-    .social-links {
-      display: none;
+<style>
+    header {
+        margin: 0;
+        padding: 0 1em;
+        background: var(--header);
+        box-shadow: 0 2px 8px rgba(var(--black), 5%);
+        position: sticky;
+        top: 0;
+        z-index: 30;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
     }
-  }
+
+    header a {
+        padding: 11px 0.5em;
+        color: var(--header-text);
+        border-bottom: 4px solid transparent;
+        text-decoration: none;
+    }
+
+    header a.active {
+        text-decoration: none;
+        border-bottom-color: var(--header-primary);
+    }
+
+    header h2 {
+        z-index: inherit;
+        margin: 0;
+        font-size: 1em;
+    }
+
+    header h2 a,
+    header h2 a.active {
+        text-decoration: none;
+    }
+
+    header hr {
+        color: var(--header-text);
+    }
+
+    .desktop-pages {
+        display: flex;
+    }
+
+    .desktop-theme-toggle {
+        display: flex;
+    }
+
+    #mobile-menu-button {
+        display: none;
+        z-index: inherit;
+    }
+
+    #mobile-menu {
+        display: none;
+    }
+
+    #overlay {
+        display: none;
+    }
+
+    @media (max-width: 720px) {
+        .desktop-pages {
+            display: none;
+        }
+
+        .desktop-theme-toggle {
+            display: none;
+        }
+
+        #mobile-menu-button {
+            display: flex;
+        }
+
+        #mobile-menu {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 60px;
+            left: 0;
+            width: 100%;
+            background-color: var(--header);
+            z-index: 20;
+            border-top: 1px solid transparent;
+            border-image: linear-gradient(
+                to right,
+                transparent 0%,
+                var(--header-text) 25%,
+                var(--header-text) 75%,
+                transparent 100%
+            );
+            border-image-slice: 1;
+        }
+
+        .mobile-menu-pages {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .mobile-menu-pages a {
+            margin: 5px 15px;
+            padding: 8px 6px;
+        }
+
+        .mobile-menu-pages a.active {
+            color: var(--header);
+            background-color: var(--header-primary);
+            border: 1px solid;
+            border-radius: 5px;
+            border-style: none;
+        }
+
+        .mobile-menu-footer {
+            display: flex;
+            padding-left: 14px;
+            padding-right: 14px;
+            padding-top: 8px;
+            padding-bottom: 8px;
+            border-top: 1px solid transparent;
+            border-image: linear-gradient(
+                to right,
+                transparent 0%,
+                var(--header-text) 25%,
+                var(--header-text) 75%,
+                transparent 100%
+            );
+            border-image-slice: 1;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .mobile-menu-footer-socials {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .mobile-menu-footer-socials a {
+            padding: 0px 6px;
+            margin: 0;
+            line-height: 1;
+            border-bottom: 0;
+        }
+
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 10;
+            display: none;
+        }
+    }
 </style>
