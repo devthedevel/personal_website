@@ -32,9 +32,6 @@ const pages: { href: string; name: string }[] = [
         'mobile-theme-toggle',
     ) as HTMLInputElement;
 
-    console.log('toggle', themeToggle.checked)
-    console.log('mobile toggle', themeToggle.checked)
-
     // Check for theme preference
     const savedTheme = localStorage.getItem('darkTheme');
     const isToggleChecked = savedTheme
@@ -55,9 +52,6 @@ const pages: { href: string; name: string }[] = [
     themeToggle.checked = isToggleChecked;
     mobileThemeToggle.checked = isToggleChecked;
     updateTheme(isToggleChecked);
-
-    console.log('toggle', themeToggle.checked)
-    console.log('mobile toggle', themeToggle.checked)
 
     // Add toggle theme thats synced across desktop/mobile views
     themeToggle?.addEventListener('change', () => {

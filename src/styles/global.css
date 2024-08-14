@@ -13,6 +13,7 @@
 
   --primary: #2337ff;
   --primary-dark: #000d8a;
+  --primary-text: #fff;
 
   --title: var(--black);
   --text: var(--gray-dark);
@@ -45,6 +46,7 @@
 
   --primary: #5fa4ff;
   --primary-dark: #1f80ff;
+  --primary-text: #fff;
 
   --title: #ededed;
   --text: #d6d6d6;

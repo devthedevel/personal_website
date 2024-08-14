@@ -1,25 +1,135 @@
 ---
 import { type CollectionEntry, getCollection } from 'astro:content';
 import BlogPost from '@layouts/BlogPost.astro';
+import FormattedDate from '@components/FormattedDate.astro';
 
 export async function getStaticPaths() {
   type BlogCollection = CollectionEntry<'blog'>;
 
+  // @ts-ignore
   const blogCollection: BlogCollection = await getCollection('blog');
   const blogPosts = Array.isArray(blogCollection) ? blogCollection : [];
 
-  return blogPosts.map((post) => ({
+  return blogPosts.map((post, i) => ({
     params: { slug: post.slug },
-    props: post,
+    props: {
+      post,
+      previous: i > 0 ? blogPosts[i - 1] : undefined,
+      next: i < blogPosts.length - 1 ? blogPosts[i + 1] : undefined,
+    },
   }));
 }
+
 type Props = CollectionEntry<'blog'>;
 
-const post = Astro.props;
+const { post, previous, next } = Astro.props;
+
 // @ts-ignore - 404 page will catch any runtime errors
 const { Content } = await post.render();
 ---
 
 <BlogPost {...(post as any).data}>
   <Content />
+  <div>
+    <h5>Like what you are reading?</h5>
+    <h5>Check out my other blog posts!</h5>
+    <div class='blog-nav-container'>
+      <div class='blog-nav-item prev'>
+        {
+          previous && (
+            <a href={`/blog/${previous.slug}/`}>
+              <img
+                width={720}
+                height={360}
+                src={previous.data.heroImage ?? '/blog/blog-placeholder.jpg'}
+                alt=''
+              />
+              <h4 class='title'>{previous.data.title}</h4>
+              <p class='date'>
+                <FormattedDate date={previous.data.pubDate} />
+              </p>
+            </a>
+          )
+        }
+      </div>
+      <div class='blog-nav-item next'>
+        {
+          next && (
+            <a href={`/blog/${next.slug}/`}>
+              <img
+                width={720}
+                height={360}
+                src={next.data.heroImage ?? '/blog/blog-placeholder.jpg'}
+                alt=''
+              />
+              <h4 class='title'>{next.data.title}</h4>
+              <p class='date'>
+                <FormattedDate date={next.data.pubDate} />
+              </p>
+            </a>
+          )
+        }
+      </div>
+    </div>
+  </div>
 </BlogPost>
+
+<style>
+  .blog-nav-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    list-style-type: none;
+    margin: 0;
+    padding-top: 20px;
+  }
+
+  .blog-nav-item {
+    width: calc(50% - 1rem);
+    order: 2;
+  }
+
+  .blog-nav-item * {
+    text-decoration: none;
+    transition: 0.2s ease;
+  }
+
+  .blog-nav-item img {
+    margin-bottom: 0.5rem;
+    border-radius: 12px;
+  }
+
+  .blog-nav-item a {
+    display: block;
+  }
+
+  .blog-nav-item a:hover h4,
+  .blog-nav-item a:hover .date {
+    color: var(--primary);
+  }
+  .blog-nav-item a:hover img {
+    box-shadow: var(--box-shadow);
+  }
+
+  .prev {
+    text-align: left;
+  }
+
+  .next {
+    text-align: right;
+  }
+
+  .title {
+    margin: 0;
+    color: var(--title);
+    line-height: 1;
+  }
+  .date {
+    margin: 0;
+    color: var(--text);
+  }
+
+  h5 {
+    text-align: center;
+  }
+</style>
